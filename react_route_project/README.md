@@ -3,9 +3,10 @@
 
 npm i react-router-dom
 npm i @fortawesome/fontawesome-free
-npm i bootstrap
 npm i axios
-
+npm install react-bootstrap bootstrap
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/material @mui/styled-engine-sc styled-components
 
 //////////////////////////////////////////////////////////////////
 
