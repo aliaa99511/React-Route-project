@@ -1,3 +1,14 @@
+
+# react insulation
+
+npm i react-router-dom
+npm i @fortawesome/fontawesome-free
+npm i bootstrap
+npm i axios
+
+
+//////////////////////////////////////////////////////////////////
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
