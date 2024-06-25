@@ -16,6 +16,7 @@ const Login = () => {
             console.log('Response:', response.data);
             if (response.data.message === "success") {
                 toast.success("Account Added Successfully");
+                localStorage.setItem('token', response.data.token);
                 setTimeout(() => {
                     navigate("/");
                 }, 6000);

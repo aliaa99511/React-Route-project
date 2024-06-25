@@ -8,7 +8,6 @@ import Login from './Pages/Login/Login';
 import Cart from './Pages/Cart/Cart';
 import Categories from './Pages/Categories/Categories';
 import Products from './Pages/Products/Products';
-// import SignOut from './Pages/SignOut/SignOut';
 
 function App() {
 
@@ -21,7 +20,6 @@ function App() {
         { path: 'Cart', element: <Cart /> },
         { path: 'Categories', element: <Categories /> },
         { path: 'Products', element: <Products /> },
-        // { path: 'SignOut', element: <SignOut /> },
         { path: '*', element: <NotFound /> },
       ]
     }
