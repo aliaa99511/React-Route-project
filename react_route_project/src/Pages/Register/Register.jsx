@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useFormik } from 'formik';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [loading, setLoading] = useState(false);
@@ -13,10 +15,14 @@ const Register = () => {
             const response = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup', values);
             console.log('Response:', response.data);
             if (response.data.message === "success") {
-                navigate("/login");
+                toast.success("Account Added Successfully");
+                setTimeout(() => {
+                    navigate("/login");
+                }, 6000);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error.response.data.message);
+            toast.warn(error.response.data.message);
         } finally {
             setLoading(false);
         }
@@ -71,8 +77,9 @@ const Register = () => {
     });
 
     return (
-        <div className="register mt-30">
-            <h4 className="mb-25">Register Now</h4>
+        <div className="register">
+            <ToastContainer />
+            <h4 className="mb-25 mt-30">Register Now</h4>
             <form onSubmit={formik.handleSubmit}>
                 <div className={`mb-3 ${formik.touched.name && formik.errors.name ? 'has-error' : ''}`}>
                     <label htmlFor="name" className="form-label">Name:</label>
