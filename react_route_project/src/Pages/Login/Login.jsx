@@ -28,15 +28,7 @@ const Login = () => {
             setLoading(false);
         }
     };
-    // {
-    //     "message": "success",
-    //     "user": {
-    //         "name": "Ahmed Abd Al-Muti",
-    //         "email": "ahmedmutti@gmail.com",
-    //         "role": "user"
-    //     },
-    //     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDdjZjZmNTE1YmRjZjM0N2MwOWYxNyIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE5MzMwMDU5LCJleHAiOjE3MjcxMDYwNTl9.RsA2dGGI42aMyZRFURicJrH03Izuu7Igem9F2ZEFxc0"
-    // }
+
     const validate = (values) => {
         const errors = {};
 
