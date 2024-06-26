@@ -8,6 +8,8 @@ import Login from './Pages/Login/Login';
 import Cart from './Pages/Cart/Cart';
 import Categories from './Pages/Categories/Categories';
 import Products from './Pages/Products/Products';
+import ProductDetails from './Components/Products/ProductDetails';
+import GlobalContextProvider from './Context/globalContext';
 
 function App() {
 
@@ -17,16 +19,18 @@ function App() {
         { index: true, element: <Home /> },
         { path: 'register', element: <Register /> },
         { path: 'login', element: <Login /> },
-        { path: 'Cart', element: <Cart /> },
-        { path: 'Categories', element: <Categories /> },
-        { path: 'Products', element: <Products /> },
+        { path: 'cart', element: <Cart /> },
+        { path: 'categories', element: <Categories /> },
+        { path: 'products', element: <Products /> },
+        { path: 'details', element: <ProductDetails /> },
         { path: '*', element: <NotFound /> },
       ]
     }
   ])
   return (
-    <RouterProvider router={routers}>
-    </RouterProvider>
+    <GlobalContextProvider>
+      <RouterProvider router={routers}></RouterProvider>
+    </GlobalContextProvider>
   );
 }
 

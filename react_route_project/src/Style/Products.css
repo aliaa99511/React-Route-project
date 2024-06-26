@@ -1,0 +1,9 @@
+.products {}
+
+.products .card {
+    height: 370px;
+}
+
+.products .card-body {
+    padding: 10px 10px 0px 10px !important;
+}

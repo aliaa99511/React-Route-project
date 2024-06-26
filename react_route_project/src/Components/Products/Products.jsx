@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import ProductItem from './ProductItem';
 
 const Products = () => {
     const [products, setProducts] = useState([])
@@ -14,22 +16,20 @@ const Products = () => {
         getAllProducts()
     }, [])
 
+
     return (
-        <div className='container mt-30'>
-            <div className="row row-cols-1 row-cols-md-5 g-4">
-                {products.map((product) => (
-                    <div className="col" key={product.id}>
-                        <div className="card h-100">
-                            <img src={product.imageCover} className="card-img-top" alt={product.title} />
-                            <div className="card-body">
-                                <h5 className="card-title">{product.title}</h5>
-                                <p className="card-text">{product.description}</p>
-                            </div>
+        <Link to={`details`}>
+            <div className='products container mt-30'>
+                <h3>Products: </h3>
+                <div className="row row-cols-1 row-cols-md-4 g-4">
+                    {products.map((product) => (
+                        <div className="col" key={product.id}>
+                            <ProductItem product={product} />
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

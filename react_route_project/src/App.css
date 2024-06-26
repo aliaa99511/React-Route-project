@@ -80,11 +80,36 @@ a:hover {
   margin-left: auto;
 }
 
-/* .form-control {
-  margin-bottom: 15px;
-} */
+.row>* {
+  padding-right: 6px !important;
+  padding-left: 6px !important;
+}
 
-/* navbar */
-.navContainer {
-  /* padding: 0 20px 0 50px */
+.h5,
+h5 {
+  font-size: 18px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 15px;
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3em;
 }
