@@ -13,9 +13,9 @@ const Login = () => {
         setLoading(true);
         try {
             const response = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signin', values);
-            console.log('Response:', response.data);
             if (response.data.message === "success") {
                 toast.success("Account Added Successfully");
+                localStorage.setItem('token', response.data.token);
                 setTimeout(() => {
                     navigate("/");
                 }, 6000);
@@ -27,15 +27,7 @@ const Login = () => {
             setLoading(false);
         }
     };
-    // {
-    //     "message": "success",
-    //     "user": {
-    //         "name": "Ahmed Abd Al-Muti",
-    //         "email": "ahmedmutti@gmail.com",
-    //         "role": "user"
-    //     },
-    //     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDdjZjZmNTE1YmRjZjM0N2MwOWYxNyIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE5MzMwMDU5LCJleHAiOjE3MjcxMDYwNTl9.RsA2dGGI42aMyZRFURicJrH03Izuu7Igem9F2ZEFxc0"
-    // }
+
     const validate = (values) => {
         const errors = {};
 

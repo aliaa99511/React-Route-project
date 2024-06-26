@@ -72,6 +72,14 @@ a:hover {
   margin-bottom: 24px;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
 /* .form-control {
   margin-bottom: 15px;
 } */

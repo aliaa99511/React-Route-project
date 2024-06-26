@@ -13,7 +13,6 @@ const Register = () => {
         setLoading(true);
         try {
             const response = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signup', values);
-            console.log('Response:', response.data);
             if (response.data.message === "success") {
                 toast.success("Account Added Successfully");
                 setTimeout(() => {
