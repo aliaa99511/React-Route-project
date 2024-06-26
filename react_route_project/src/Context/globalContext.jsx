@@ -1,12 +1,19 @@
-import React, { createContext } from "react";
+import { createContext, useState } from "react";
+import axios from "axios";
 
-export const globalContext = createContext()
-const GlobalContextProvider = (props) => {
+export const GlobalContext = createContext();
+
+export default function GlobalContextProvider(props) {
 
     let headers = {
         token: localStorage.getItem("token")
     }
 
+    function getAllProducts() {
+        return axios.get('https://ecommerce.routemisr.com/api/v1/products')
+            .then((response) => response)
+            .catch((err) => err)
+    }
 
     // function adProductToCart(id) {
     //     return axios.post("https://ecommerce.routemisr.com/api/vl/cart",
@@ -21,11 +28,9 @@ const GlobalContextProvider = (props) => {
     //         .catch((err) => err)
     // }
 
-
-
-    return <globalContext.Provider value={{}}>
-        {props.childern}
-    </globalContext.Provider>
-};
-
-export default GlobalContextProvider;
+    return (
+        <GlobalContext.Provider value={{ getAllProducts }}>
+            {props.children}
+        </GlobalContext.Provider>
+    );
+}

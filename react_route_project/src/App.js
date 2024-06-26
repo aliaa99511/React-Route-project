@@ -15,7 +15,8 @@ function App() {
 
   const routers = createBrowserRouter([
     {
-      path: '', element: <Layout />, children: [
+      path: '', element: <Layout />,
+      children: [
         { index: true, element: <Home /> },
         { path: 'register', element: <Register /> },
         { path: 'login', element: <Login /> },
@@ -31,6 +32,7 @@ function App() {
     <GlobalContextProvider>
       <RouterProvider router={routers}></RouterProvider>
     </GlobalContextProvider>
+
   );
 }
 
