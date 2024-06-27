@@ -20,21 +20,21 @@ export default function GlobalContextProvider(props) {
             .catch((err) => err)
     }
 
-    // function adProductToCart(id) {
-    //     return axios.post("https://ecommerce.routemisr.com/api/vl/cart",
-    //         {
-    //             productid: id,
-    //         }, {
+    function adProductToCart(id) {
+        return axios.post("https://ecommerce.routemisr.com/api/vl/cart",
+            {
+                productid: id,
+            }, {
 
-    //         headers,
-    //     }
-    //     )
-    //         .then((response) => response)
-    //         .catch((err) => err)
-    // }
+            headers,
+        }
+        )
+            .then((response) => response)
+            .catch((err) => err)
+    }
 
     return (
-        <GlobalContext.Provider value={{ getAllProducts, getCartDetails }}>
+        <GlobalContext.Provider value={{ getAllProducts, getCartDetails, adProductToCart }}>
             {props.children}
         </GlobalContext.Provider>
     );
