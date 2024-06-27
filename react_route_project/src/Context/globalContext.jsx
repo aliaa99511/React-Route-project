@@ -9,8 +9,15 @@ export default function GlobalContextProvider(props) {
         token: localStorage.getItem("token")
     }
 
+
+
     function getAllProducts() {
         return axios.get('https://ecommerce.routemisr.com/api/v1/products')
+            .then((response) => response)
+            .catch((err) => err)
+    }
+    function getCartDetails(id) {
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
             .then((response) => response)
             .catch((err) => err)
     }
@@ -29,7 +36,7 @@ export default function GlobalContextProvider(props) {
     // }
 
     return (
-        <GlobalContext.Provider value={{ getAllProducts }}>
+        <GlobalContext.Provider value={{ getAllProducts, getCartDetails }}>
             {props.children}
         </GlobalContext.Provider>
     );

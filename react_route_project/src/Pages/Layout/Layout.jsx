@@ -8,9 +8,9 @@ const Layout = () => {
     return (
         <>
             <Header />
-            <div className='container'>
-                <Outlet></Outlet>
-            </div>
+            {/* <div className='container'> */}
+            <Outlet></Outlet>
+            {/* </div> */}
 
         </>
     );

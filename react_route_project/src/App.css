@@ -64,6 +64,10 @@ a:hover {
   margin-right: 10px;
 }
 
+.mt-15 {
+  margin-top: 15px;
+}
+
 .mt-30 {
   margin-top: 30px;
 }
@@ -85,9 +89,15 @@ a:hover {
   padding-left: 6px !important;
 }
 
+a,
+a:hover {
+  color: black;
+  text-decoration: none !important;
+}
+
 .h5,
 h5 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .h1,
@@ -102,7 +112,17 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
+}
+
+.btn {
+  padding: 5px !important;
+  margin-top: 10px !important;
+  font-size: 16px !important;
+}
+
+.btn-lg {
+  width: 100% !important;
 }
 
 .truncate {
@@ -112,4 +132,19 @@ h6 {
   overflow: hidden;
   text-overflow: ellipsis;
   max-height: 3em;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 67vh;
+}
+
+.img-fluid {
+  height: 600px !important;
+}
+
+.full-width {
+  width: 100% !important;
 }

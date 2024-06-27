@@ -76,7 +76,7 @@ const Register = () => {
     });
 
     return (
-        <div className="register">
+        <div className="register container">
             <ToastContainer />
             <h4 className="mb-25 mt-30">Register Now</h4>
             <form onSubmit={formik.handleSubmit}>

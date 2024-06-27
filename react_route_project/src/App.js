@@ -23,7 +23,7 @@ function App() {
         { path: 'cart', element: <Cart /> },
         { path: 'categories', element: <Categories /> },
         { path: 'products', element: <Products /> },
-        { path: 'details', element: <ProductDetails /> },
+        { path: 'details/:id', element: <ProductDetails /> },
         { path: '*', element: <NotFound /> },
       ]
     }
