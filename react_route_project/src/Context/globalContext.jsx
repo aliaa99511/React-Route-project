@@ -9,8 +9,6 @@ export default function GlobalContextProvider(props) {
         token: localStorage.getItem("token")
     }
 
-
-
     function getAllProducts() {
         return axios.get('https://ecommerce.routemisr.com/api/v1/products')
             .then((response) => response)
