@@ -1,31 +1,55 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import ProductItem from './ProductItem';
+import { GlobalContext } from '../../Context/globalContext';
+import SpinnerLoading from '../SpinnerLoading/SpinnerLoading';
+import NotFoundProduct from '../NotFoundProduct/NotFoundProduct';
 
 const Products = () => {
     const [products, setProducts] = useState([])
+    let { getAllProducts } = useContext(GlobalContext)
+    const [loading, setLoading] = useState(true);
 
-    async function getAllProducts() {
-        const response = await axios.get('https://ecommerce.routemisr.com/api/v1/products')
-        console.log('products:', response.data.data)
-        setProducts(response.data.data)
-    }
+    const getProducts = async () => {
+        setLoading(true);
+        try {
+            let data = await getAllProducts()
+            setProducts(data.data.data)
+        } catch (error) {
+            console.error("Error fetching product :", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // async function getAllProducts() {
+    //     const response = await axios.get('https://ecommerce.routemisr.com/api/v1/products')
+    //     console.log('products:', response.data.data)
+    //     setProducts(response.data.data)
+    // }
 
     useEffect(() => {
-        getAllProducts()
+        getProducts()
     }, [])
 
+    if (loading) {
+        return (
+            <SpinnerLoading />
+        );
+    }
+
+    if (!products) {
+        return (
+            <NotFoundProduct />
+        );
+    }
+
     return (
-        <div className='container mt-30'>
-            <div className="row row-cols-1 row-cols-md-5 g-4">
+        <div className='products container mt-30'>
+            <h3>Products: </h3>
+            <div className="row row-cols-1 row-cols-md-4 g-4">
                 {products.map((product) => (
                     <div className="col" key={product.id}>
-                        <div className="card h-100">
-                            <img src={product.imageCover} className="card-img-top" alt={product.title} />
-                            <div className="card-body">
-                                <h5 className="card-title">{product.title}</h5>
-                                <p className="card-text">{product.description}</p>
-                            </div>
-                        </div>
+                        <ProductItem product={product} />
                     </div>
                 ))}
             </div>

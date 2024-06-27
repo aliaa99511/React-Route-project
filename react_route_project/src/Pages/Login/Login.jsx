@@ -56,7 +56,7 @@ const Login = () => {
     });
 
     return (
-        <div className="login">
+        <div className="login container">
             <ToastContainer />
             <h4 className="mb-25 mt-30">Login Now</h4>
             <form onSubmit={formik.handleSubmit}>
