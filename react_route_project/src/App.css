@@ -136,3 +136,8 @@ h6 {
 .full-width {
   width: 100% !important;
 }
+
+.productDetails img {
+  height: 500px !important;
+  margin-top: 44px;
+}
