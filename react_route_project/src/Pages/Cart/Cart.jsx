@@ -27,10 +27,9 @@ const Cart = () => {
     }
 
     async function UpdateQuantity(id, count) {
-        console.log('id', id)
-        console.log('count', count)
-        let data = await UpdateCartProductQuantity(id, count)
+        let { data } = await UpdateCartProductQuantity(id, count)
         console.log('dataQuant', data)
+        setCartItemData(data.data.products)
     }
 
     async function RemoveItem(id) {
@@ -64,7 +63,7 @@ const Cart = () => {
 
             <div className="container">
                 <h4 className="mt-4">Shop Cart :</h4>
-                <h6 className="mt-2">Total Cart Price : {totalPrice} EGP</h6>
+                <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
 
                 <div className="card">
                     {cartItemData.map(item => (
