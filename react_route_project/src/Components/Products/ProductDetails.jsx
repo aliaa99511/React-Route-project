@@ -4,17 +4,19 @@ import { GlobalContext } from '../../Context/globalContext';
 import { Card, Button, Container, Row, Col, Image, Badge, Spinner } from 'react-bootstrap';
 import SpinnerLoading from '../SpinnerLoading/SpinnerLoading';
 import NotFoundProduct from '../NotFoundProduct/NotFoundProduct';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
-    let { id } = useParams();
-    const { getCartDetails } = useContext(GlobalContext);
+    let { detailsId } = useParams();
+    const { getProductDetails, adProductToCart } = useContext(GlobalContext);
     const [productDetails, setProductDetails] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const fetchProductDetails = async () => {
         setLoading(true);
         try {
-            let data = await getCartDetails(id);
+            let data = await getProductDetails(detailsId);
             setProductDetails(data.data.data);
         } catch (error) {
             console.error("Error fetching product details:", error);
@@ -23,9 +25,22 @@ const ProductDetails = () => {
         }
     };
 
+    const addToCard = async (id) => {
+        try {
+            await adProductToCart(id);
+            let data = await adProductToCart(id);
+            if (data.data.status == "success") {
+                toast.success(data.data.message);
+            }
+
+        } catch (error) {
+            console.error("Error fetching product details:", error);
+        }
+    };
+
     useEffect(() => {
         fetchProductDetails();
-    }, [id, getCartDetails]);
+    }, [detailsId, getProductDetails]);
 
     if (loading) {
         return (
@@ -40,7 +55,8 @@ const ProductDetails = () => {
     }
 
     return (
-        <div className="productDetails">
+        <div className="productDetails container">
+            <ToastContainer />
             <Container fluid>
                 <Row>
                     <Col md={4}>
@@ -62,7 +78,7 @@ const ProductDetails = () => {
                                         </Card.Text>
                                     </div>
                                 </div>
-                                <Button variant="success" size="lg">add to cart</Button>
+                                <Button variant="success" size="lg" onClick={() => addToCard(productDetails.id)}>add to cart</Button>
                             </Card.Body>
                         </Card>
                     </Col>

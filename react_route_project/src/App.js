@@ -10,6 +10,7 @@ import Categories from './Pages/Categories/Categories';
 import Products from './Pages/Products/Products';
 import ProductDetails from './Components/Products/ProductDetails';
 import GlobalContextProvider from './Context/globalContext';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 
 function App() {
 
@@ -17,14 +18,44 @@ function App() {
     {
       path: '', element: <Layout />,
       children: [
-        { index: true, element: <Home /> },
+        {
+          index: true, element:
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+        },
         { path: 'register', element: <Register /> },
         { path: 'login', element: <Login /> },
-        { path: 'cart', element: <Cart /> },
-        { path: 'categories', element: <Categories /> },
-        { path: 'products', element: <Products /> },
-        { path: 'details/:id', element: <ProductDetails /> },
         { path: '*', element: <NotFound /> },
+        {
+          path: 'cart', element:
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+        },
+        {
+          path: 'categories', element:
+            <ProtectedRoute>
+              <Categories />
+            </ProtectedRoute>
+        },
+        {
+          path: 'products', element:
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+        },
+        {
+          path: 'details/:detailsId', element:
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+        },
+        // { index: true, element: <Home /> },
+        // { path: 'cart', element: <Cart /> },
+        // { path: 'categories', element: <Categories /> },
+        // { path: 'products', element: <Products /> },
+        // { path: 'details/:id', element: <ProductDetails /> },
       ]
     }
   ])

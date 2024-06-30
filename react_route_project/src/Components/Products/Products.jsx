@@ -6,7 +6,7 @@ import NotFoundProduct from '../NotFoundProduct/NotFoundProduct';
 
 const Products = () => {
     const [products, setProducts] = useState([])
-    let { getAllProducts } = useContext(GlobalContext)
+    const { getAllProducts } = useContext(GlobalContext)
     const [loading, setLoading] = useState(true);
 
     const getProducts = async () => {

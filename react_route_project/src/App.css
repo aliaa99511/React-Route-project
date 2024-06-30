@@ -14,28 +14,8 @@ body {
   font-family: var(--fontFamily);
 }
 
-.rating-color {
-  color: var(--ratingColor);
-}
-
-.cursor-pointer {
+.pointer {
   cursor: pointer;
-}
-
-.product:hover {
-  box-shadow: var(--shadow) !important;
-  border: 1px solid var(--bgColor) !important;
-}
-
-.product .btn {
-  opacity: 0 !important;
-  transition: transform 1s, opacity 1s !important;
-  transform: translateY(100%) !important;
-}
-
-.product:hover .btn {
-  opacity: 1 !important;
-  transform: translateY(0%) !important;
 }
 
 a,
@@ -68,8 +48,16 @@ a:hover {
   margin-top: 15px;
 }
 
+.mr-15 {
+  margin-right: 15px;
+}
+
 .mt-30 {
   margin-top: 30px;
+}
+
+.mt-50 {
+  margin-top: 50px;
 }
 
 .mb-25 {
@@ -147,4 +135,9 @@ h6 {
 
 .full-width {
   width: 100% !important;
+}
+
+.productDetails img {
+  height: 500px !important;
+  margin-top: 44px;
 }
