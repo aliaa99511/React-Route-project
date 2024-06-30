@@ -7,6 +7,7 @@ import '../../Style/Cart.css'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from "react-helmet";
+import EmptyCart from "../../Components/Cart/EmptyCart";
 
 const Cart = () => {
     const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
@@ -55,6 +56,12 @@ const Cart = () => {
     if (!cartItemData) {
         return (
             <NotFoundProduct />
+        );
+    }
+
+    if (cartItemData.length == 0) {
+        return (
+            <EmptyCart />
         );
     }
 
