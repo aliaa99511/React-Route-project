@@ -77,13 +77,15 @@ const Cart = () => {
                 <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
 
                 <div className="card">
-                    {cartItemData.map(item => (
-                        <CartItem
-                            key={item._id}
-                            item={item}
-                            RemoveItem={RemoveItem}
-                            UpdateQuantity={UpdateQuantity} />
-                    ))}
+                    {cartItemData.length > 0 &&
+                        cartItemData.map(item => (
+                            <CartItem
+                                key={item._id}
+                                item={item}
+                                RemoveItem={RemoveItem}
+                                UpdateQuantity={UpdateQuantity} />
+                        ))
+                    }
                 </div>
 
             </div>
