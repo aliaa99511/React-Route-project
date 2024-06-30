@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from "react-helmet";
 
 const Register = () => {
     const [loading, setLoading] = useState(false);
@@ -78,6 +79,9 @@ const Register = () => {
     return (
         <div className="register container">
             <ToastContainer />
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <h4 className="mb-25 mt-30">Register Now</h4>
             <form onSubmit={formik.handleSubmit}>
                 <div className={`mb-3 ${formik.touched.name && formik.errors.name ? 'has-error' : ''}`}>

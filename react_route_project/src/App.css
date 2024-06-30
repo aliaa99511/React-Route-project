@@ -103,10 +103,24 @@ h6 {
   margin-bottom: 15px !important;
 }
 
+.offline {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: #f1f1f1;
+  padding: 4px 15px;
+  z-index: 100;
+}
+
+
 .btn {
   padding: 5px !important;
   margin-top: 10px !important;
   font-size: 16px !important;
+}
+
+.login .btn {
+  padding: 7px 15px !important;
 }
 
 .btn-lg {

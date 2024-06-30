@@ -6,6 +6,7 @@ import CartItem from "../../Components/Cart/CartItem";
 import '../../Style/Cart.css'
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from "react-helmet";
 
 const Cart = () => {
     const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
@@ -60,6 +61,9 @@ const Cart = () => {
     return (
         <div className="cart">
             <ToastContainer />
+            <Helmet>
+                <title>My Cart</title>
+            </Helmet>
 
             <div className="container">
                 <h4 className="mt-4">Shop Cart :</h4>

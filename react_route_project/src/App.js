@@ -11,6 +11,8 @@ import Products from './Pages/Products/Products';
 import ProductDetails from './Components/Products/ProductDetails';
 import GlobalContextProvider from './Context/globalContext';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import { Offline } from "react-detect-offline";
+import wifiOffline from './assets/images/icons8-wi-fi-off-50.png';
 
 function App() {
 
@@ -61,6 +63,11 @@ function App() {
   ])
   return (
     <GlobalContextProvider>
+      <div className='offline'>
+        <Offline>
+          <img src={wifiOffline} width={"18px"} className='mr-10' />
+          you are offline</Offline>
+      </div>
       <RouterProvider router={routers}></RouterProvider>
     </GlobalContextProvider>
 
