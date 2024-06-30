@@ -46,7 +46,7 @@ function App() {
             </ProtectedRoute>
         },
         {
-          path: 'details/:id', element:
+          path: 'details/:detailsId', element:
             <ProtectedRoute>
               <ProductDetails />
             </ProtectedRoute>

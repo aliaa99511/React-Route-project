@@ -6,7 +6,7 @@ import SpinnerLoading from '../SpinnerLoading/SpinnerLoading';
 import NotFoundProduct from '../NotFoundProduct/NotFoundProduct';
 
 const ProductDetails = () => {
-    let { paramId } = useParams();
+    let { detailsId } = useParams();
     const { getCartDetails, adProductToCart } = useContext(GlobalContext);
     const [productDetails, setProductDetails] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const ProductDetails = () => {
     const fetchProductDetails = async () => {
         setLoading(true);
         try {
-            let data = await getCartDetails(paramId);
+            let data = await getCartDetails(detailsId);
             setProductDetails(data.data.data);
         } catch (error) {
             console.error("Error fetching product details:", error);
@@ -22,18 +22,21 @@ const ProductDetails = () => {
             setLoading(false);
         }
     };
+
     const addToCard = async (id) => {
-        try {
-            await adProductToCart(id);
-        } catch (error) {
-            console.error("Error fetching product details:", error);
-        }
+        console.log('id', id)
+        console.log('s')
+
+        // try {
+        //     await adProductToCart(id);
+        // } catch (error) {
+        //     console.error("Error fetching product details:", error);
+        // }
     };
 
     useEffect(() => {
         fetchProductDetails();
-    }, [paramId, getCartDetails]);
-
+    }, [detailsId, getCartDetails]);
 
     if (loading) {
         return (
