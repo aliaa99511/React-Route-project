@@ -1,0 +1,63 @@
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../Context/globalContext";
+import Slider from "react-slick";
+import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
+import NotFoundProduct from "../NotFoundProduct/NotFoundProduct";
+
+const CategoriesSlider = () => {
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const { getAllCategoriesSlider } = useContext(GlobalContext);
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+    };
+
+    async function getCategoriesSlider() {
+        setLoading(true);
+        try {
+            let { data } = await getAllCategoriesSlider();
+            setCategories(data.data);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getCategoriesSlider();
+    }, []);
+
+    if (loading) {
+        return (
+            <SpinnerLoading />
+        );
+    }
+
+    if (!categories) {
+        return (
+            <NotFoundProduct />
+        );
+    }
+
+    return (
+        <div className="categories container">
+            <h5>Categories: </h5>
+            <Slider {...settings}>
+                {categories.map((category) => (
+                    <div key={category._id}>
+                        <img src={category.image} alt={category.name} className="mb-15" width="100%" height="200px" />
+                        <h6>{category.name}</h6>
+                    </div>
+                ))}
+            </Slider>
+        </div>
+    );
+};
+
+export default CategoriesSlider;

@@ -88,6 +88,12 @@ export default function GlobalContextProvider(props) {
             });
     }
 
+    function getAllCategoriesSlider() {
+        return axios.get("https://ecommerce.routemisr.com/api/v1/categories")
+            .then((response) => response)
+            .catch((error) => error)
+    }
+
     async function initCartCount() {
         let { data } = await GetLoggedUserCart()
         setNumOfCartItems(data.numOfCartItems)
@@ -99,7 +105,7 @@ export default function GlobalContextProvider(props) {
 
 
     return (
-        <GlobalContext.Provider value={{ getAllProducts, getProductDetails, addProductToCart, numOfCartItems, setNumOfCartItems, GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem }}>
+        <GlobalContext.Provider value={{ getAllProducts, getProductDetails, addProductToCart, numOfCartItems, setNumOfCartItems, GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, getAllCategoriesSlider }}>
             {props.children}
         </GlobalContext.Provider>
     );

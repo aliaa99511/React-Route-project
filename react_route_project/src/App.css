@@ -52,6 +52,10 @@ a:hover {
   margin-right: 15px;
 }
 
+.mb-15 {
+  margin-bottom: 15px;
+}
+
 .mt-30 {
   margin-top: 30px;
 }
@@ -154,4 +158,13 @@ h6 {
 .productDetails img {
   height: 500px !important;
   margin-top: 44px;
+}
+
+.mainSlider {
+  margin-bottom: 20px;
+}
+
+.mainSlider .row>* {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }
