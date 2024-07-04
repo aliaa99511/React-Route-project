@@ -13,6 +13,8 @@ import GlobalContextProvider from './Context/globalContext';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import { Offline } from "react-detect-offline";
 import wifiOffline from './assets/images/icons8-wi-fi-off-50.png';
+import { Provider } from 'react-redux';
+import { store } from './Redux/Store';
 
 function App() {
 
@@ -62,14 +64,16 @@ function App() {
     }
   ])
   return (
-    <GlobalContextProvider>
-      <div className='offline'>
-        <Offline>
-          <img src={wifiOffline} width={"18px"} className='mr-10' />
-          you are offline</Offline>
-      </div>
-      <RouterProvider router={routers}></RouterProvider>
-    </GlobalContextProvider>
+    <Provider store={store}>
+      <GlobalContextProvider>
+        <div className='offline'>
+          <Offline>
+            <img src={wifiOffline} width={"18px"} className='mr-10' />
+            you are offline</Offline>
+        </div>
+        <RouterProvider router={routers}></RouterProvider>
+      </GlobalContextProvider>
+    </Provider>
 
   );
 }
