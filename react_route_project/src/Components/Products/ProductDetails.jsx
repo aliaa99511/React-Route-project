@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
     let { detailsId } = useParams();
-    const { getProductDetails, adProductToCart } = useContext(GlobalContext);
+    const { getProductDetails, addProductToCart } = useContext(GlobalContext);
     const [productDetails, setProductDetails] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -27,8 +27,7 @@ const ProductDetails = () => {
 
     const addToCard = async (id) => {
         try {
-            await adProductToCart(id);
-            let data = await adProductToCart(id);
+            let data = await addProductToCart(id);
             if (data.data.status == "success") {
                 toast.success(data.data.message);
             }

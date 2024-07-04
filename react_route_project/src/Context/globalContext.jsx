@@ -22,14 +22,14 @@ export default function GlobalContextProvider(props) {
             .catch((err) => err)
     }
 
-    function adProductToCart(id) {
+    function addProductToCart(id) {
 
         return axios.post("https://ecommerce.routemisr.com/api/v1/cart",
             {
                 productId: id,
             },
             {
-                headers: headers,
+                headers,
             }
         )
             .then((response) => {
@@ -46,7 +46,7 @@ export default function GlobalContextProvider(props) {
     function GetLoggedUserCart() {
         return axios.get('https://ecommerce.routemisr.com/api/v1/cart',
             {
-                headers: headers,
+                headers,
             }
         )
             .then((response) => {
@@ -58,10 +58,10 @@ export default function GlobalContextProvider(props) {
     function UpdateCartProductQuantity(id, count) {
         return axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
             {
-                count: count,
+                count,
             },
             {
-                headers: headers,
+                headers,
             }
         )
             .then((response) => {
@@ -76,7 +76,7 @@ export default function GlobalContextProvider(props) {
     function RemoveCartItem(id) {
         return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
             {
-                headers: headers,
+                headers,
             }
         )
             .then((response) => {
@@ -86,6 +86,12 @@ export default function GlobalContextProvider(props) {
                 console.error('error', err);
                 return err;
             });
+    }
+
+    function getAllCategoriesSlider() {
+        return axios.get("https://ecommerce.routemisr.com/api/v1/categories")
+            .then((response) => response)
+            .catch((error) => error)
     }
 
     async function initCartCount() {
@@ -99,7 +105,7 @@ export default function GlobalContextProvider(props) {
 
 
     return (
-        <GlobalContext.Provider value={{ getAllProducts, getProductDetails, adProductToCart, numOfCartItems, setNumOfCartItems, GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem }}>
+        <GlobalContext.Provider value={{ getAllProducts, getProductDetails, addProductToCart, numOfCartItems, setNumOfCartItems, GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, getAllCategoriesSlider }}>
             {props.children}
         </GlobalContext.Provider>
     );

@@ -52,6 +52,10 @@ a:hover {
   margin-right: 15px;
 }
 
+.mb-15 {
+  margin-bottom: 15px;
+}
+
 .mt-30 {
   margin-top: 30px;
 }
@@ -103,10 +107,24 @@ h6 {
   margin-bottom: 15px !important;
 }
 
+.offline {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background: #f1f1f1;
+  padding: 4px 15px;
+  z-index: 100;
+}
+
+
 .btn {
   padding: 5px !important;
   margin-top: 10px !important;
   font-size: 16px !important;
+}
+
+.login .btn {
+  padding: 7px 15px !important;
 }
 
 .btn-lg {
@@ -140,4 +158,13 @@ h6 {
 .productDetails img {
   height: 500px !important;
   margin-top: 44px;
+}
+
+.mainSlider {
+  margin-bottom: 20px;
+}
+
+.mainSlider .row>* {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }

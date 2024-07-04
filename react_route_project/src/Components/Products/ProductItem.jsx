@@ -12,7 +12,7 @@ const ProductItem = ({ product }) => {
     return (
         <Link to={`details/${product.id}`}>
             <Card>
-                <Card.Img variant="top" src={product.imageCover} height={"220px"} width={"100%"} />
+                <Card.Img variant="top" src={product.imageCover} height={"260px"} width={"100%"} />
                 <Card.Body className='d-flex justify-content-between flex-column'>
                     <div>
                         <Card.Title>{truncateTitle(product.title)}</Card.Title>

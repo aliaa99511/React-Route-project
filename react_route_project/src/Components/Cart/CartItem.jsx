@@ -13,11 +13,9 @@ const CartItem = ({ item, RemoveItem, UpdateQuantity }) => {
                     <button className="btn btn-danger btn-sm" onClick={() => RemoveItem(item.product._id)}>Remove</button>
                 </div>
                 <div className="ms-auto d-flex align-items-center">
-                    <button className="btn btn-outline-secondary btn-sm" onClick={() => UpdateQuantity(item._id, item.count) - 1}>-</button>
-                    {/* <button className="btn btn-outline-secondary btn-sm" onClick={() => handleQuantityChange(item.id, -1)} disabled={item.count <= 1}>-</button> */}
+                    <button className="btn btn-outline-secondary btn-sm" onClick={() => UpdateQuantity(item.product._id, item.count - 1)} disabled={item.count <= 1}>-</button>
                     <div className="mx-2 count">{item.count}</div>
-                    <button className="btn btn-outline-secondary btn-sm" onClick={() => UpdateQuantity(item._id, item.count) + 1}>+</button>
-                    {/* <button className="btn btn-outline-secondary btn-sm" onClick={() => handleQuantityChange(item.id, 1)}>+</button> */}
+                    <button className="btn btn-outline-secondary btn-sm" onClick={() => UpdateQuantity(item.product._id, item.count + 1)}>+</button>
                 </div>
             </div>
             <hr />

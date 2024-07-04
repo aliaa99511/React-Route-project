@@ -32,3 +32,9 @@
 .cart .btn {
     padding: 4px 11px !important;
 }
+
+.emptyCart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
