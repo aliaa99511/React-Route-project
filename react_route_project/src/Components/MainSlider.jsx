@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
-import sliderImage1 from "../assets/images/slider/slider-image-1.jpeg"
-import sliderImage2 from "../assets/images/slider/slider-image-2.jpeg"
-import sliderImage3 from "../assets/images/slider/slider-image-3.jpeg"
+import sliderImage2 from "../assets/images/slider/slider-image-1.jpeg"
+import sliderImage1 from "../assets/images/slider/slider-image-3.jpeg"
+import sliderImage3 from "../assets/images/slider/slider-image-2.jpeg"
 
 import groceryBanner from "../assets/images/slider/grocery-banner.png"
 import groceryBanner2 from "../assets/images/slider/grocery-banner-2.jpeg"
