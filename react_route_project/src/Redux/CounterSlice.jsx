@@ -7,8 +7,19 @@ const CounterSlice = createSlice({
     name: 'counter',
     initialState,
     reducers: {
-        increase: () => {
-
+        increase: (state) => {
+            state.counter += 1
+        },
+        decrease: (state) => {
+            state.counter -= 1
+        },
+        increaseByAmount: (state, action) => {
+            console.log("action", action);
+            state.counter += action.payload
         }
     }
 })
+
+export let { increase, decrease, increaseByAmount } = CounterSlice.actions
+
+export let counterReducer = CounterSlice.reducer
