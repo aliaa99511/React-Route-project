@@ -8,25 +8,35 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from "react-helmet";
 import EmptyCart from "../../Components/Cart/EmptyCart";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchShoppingCart } from "../../Redux/CartSlice";
 
 const Cart = () => {
     const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
     const [cartItemData, setCartItemData] = useState([])
     const [totalPrice, setTotalPrice] = useState()
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch()
 
-    async function ShoppingCart() {
-        setLoading(true);
-        try {
-            let { data } = await GetLoggedUserCart()
-            setCartItemData(data.data.products)
-            setTotalPrice(data.data.totalCartPrice)
-        } catch (error) {
-            console.error("Error fetching product :", error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    const { cart } = useSelector((state) => state)
+
+    console.log('cartItems', cart.cartItems.data?.products)
+
+
+
+
+    // async function ShoppingCart() {
+    //     setLoading(true);
+    //     try {
+    //         let { data } = await GetLoggedUserCart()
+    //         setCartItemData(data.data.products)
+    //         setTotalPrice(data.data.totalCartPrice)
+    //     } catch (error) {
+    //         console.error("Error fetching product :", error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
 
     async function UpdateQuantity(id, count) {
         let { data } = await UpdateCartProductQuantity(id, count)
@@ -42,10 +52,13 @@ const Cart = () => {
             setNumOfCartItems(data.numOfCartItems)
         }
     }
-    useEffect(() => {
-        ShoppingCart()
-    }, [])
+    // useEffect(() => {
+    //     ShoppingCart()
+    // }, [])
 
+    useEffect(() => {
+        dispatch(fetchShoppingCart()).then(() => setLoading(false))
+    }, [dispatch])
 
     if (loading) {
         return (
@@ -53,13 +66,24 @@ const Cart = () => {
         );
     }
 
-    if (!cartItemData) {
-        return (
-            <NotFoundProduct />
-        );
+    // if (!cartItemData) {
+    //     return (
+    //         <NotFoundProduct />
+    //     );
+    // }
+
+    // if (cartItemData.length == 0) {
+    //     return (
+    //         <EmptyCart />
+    //     );
+    // }
+
+    if (!cart.cartItems.data.products || cart.cartItems.data.products.length === 0) {
+        return <NotFoundProduct />;
     }
 
-    if (cartItemData.length == 0) {
+
+    if (cart.cartItems.data.products.length == 0) {
         return (
             <EmptyCart />
         );
@@ -77,8 +101,8 @@ const Cart = () => {
                 <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
 
                 <div className="card">
-                    {cartItemData.length > 0 &&
-                        cartItemData.map(item => (
+                    {cart.cartItems.data.products.length > 0 &&
+                        cart.cartItems.data.products.map(item => (
                             <CartItem
                                 key={item._id}
                                 item={item}
