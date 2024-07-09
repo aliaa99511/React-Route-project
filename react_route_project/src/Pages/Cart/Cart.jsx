@@ -37,14 +37,14 @@
 //         setCartItemData(data.data.products)
 //     }
 
-//     async function RemoveItem(id) {
-//         let { data } = await RemoveCartItem(id)
-//         if (data.status == "success") {
-//             toast.success("product delete successfully");
-//             setCartItemData(data.data.products)
-//             setNumOfCartItems(data.numOfCartItems)
-//         }
+// async function RemoveItem(id) {
+//     let { data } = await RemoveCartItem(id)
+//     if (data.status == "success") {
+//         toast.success("product delete successfully");
+//         setCartItemData(data.data.products)
+//         setNumOfCartItems(data.numOfCartItems)
 //     }
+// }
 //     useEffect(() => {
 //         ShoppingCart()
 //     }, [])
@@ -110,7 +110,6 @@
 // export default Cart;
 
 
-
 // with redux
 
 import React, { useEffect, useState } from "react";
@@ -125,51 +124,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCart, removeCartItem, updateCartProductQuantity } from "../../Redux/CartSlice";
 
 const Cart = () => {
-    const [cartItemData, setCartItemData] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const { data: cartItemData, totalPrice, loading } = useSelector(state => state.cart.cartItems);
+    console.log("cartItemData", cartItemData);
+    console.log("totalPrice", totalPrice);
+    console.log("loading", loading);
+
 
     const dispatch = useDispatch()
 
     const handleCartQuantity = (id, count) => {
-        dispatch(updateCartProductQuantity({ id, count })).then((response) => {
-            setCartItemData(response.payload.data.products);
-            setTotalPrice(response.payload.data.totalCartPrice);
-        })
+        //     dispatch(updateCartProductQuantity({ id, count })).then((response) => {
+        //         setCartItemData(response.payload.data.products);
+        //         setTotalPrice(response.payload.data.totalCartPrice);
+        //     })
     }
 
     const handleRemoveItem = (id) => {
         console.log('Dispatching removeCartItem with ID:', id);
         dispatch(removeCartItem(id))
-            .then((action) => {
-                console.log("action re", action);
-
-                if (action.meta.requestStatus === 'fulfilled') {
-                    toast.success("Product deleted successfully");
-                    setCartItemData(action.payload.data.products);
-                    setTotalPrice(action.payload.data.totalCartPrice);
-                } else {
-                    toast.error("Error deleting product");
-                    console.error('Remove Item Rejected:', action.payload);
-                }
-            })
-            .catch((error) => {
-                toast.error("Error deleting product");
-                console.error('Remove Item Catch Error:', error);
-            });
     };
 
+
     useEffect(() => {
-        dispatch(fetchShoppingCart()).then((response) => {
-            setLoading(false);
-            if (response.meta.requestStatus === 'fulfilled') {
-                setCartItemData(response.payload.data.products);
-                setTotalPrice(response.payload.data.totalCartPrice);
-            } else {
-                toast.error("Error fetching cart items");
-            }
-        });
-    }, [dispatch]);
+        dispatch(fetchShoppingCart())
+    }, []);
 
 
     if (loading) {
@@ -178,9 +156,9 @@ const Cart = () => {
         );
     }
 
-    if (!cartItemData || cartItemData.length === 0) {
-        return <EmptyCart />;
-    }
+    // if (!cartItemData || cartItemData.length === 0) {
+    //     return <EmptyCart />;
+    // }
 
     return (
         <div className="cart">
@@ -192,13 +170,14 @@ const Cart = () => {
                 <h4 className="mt-4">Shop Cart :</h4>
                 <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
                 <div className="card">
-                    {cartItemData.length > 0 &&
+                    {cartItemData?.length > 0 &&
                         cartItemData.map(item => (
                             <CartItem
                                 key={item._id}
                                 item={item}
                                 RemoveItem={handleRemoveItem}
-                                UpdateQuantity={handleCartQuantity} />
+                                UpdateQuantity={handleCartQuantity}
+                            />
                         ))}
                 </div>
 

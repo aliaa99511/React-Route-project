@@ -13,15 +13,14 @@ const Header = () => {
     let token = localStorage.getItem("token")
     const navigate = useNavigate();
     // const { numOfCartItems } = useContext(GlobalContext);
-    const numOfCartItems = useSelector(state => state.cart.numOfCartItems);
-    const dispatch = useDispatch()
+
+    const dispatch = useDispatch();
+    const { data, loading } = useSelector(state => state.cart.numOfCartItems);
+
 
     useEffect(() => {
         dispatch(fetchCartCount());
     }, [dispatch]);
-
-    console.log("numOfCartItems", numOfCartItems);
-
 
     let handelSignOut = () => {
         localStorage.removeItem("token")
@@ -48,7 +47,7 @@ const Header = () => {
 
                                     <div className='cart-icon position-relative mr-15 pointer'>
                                         <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
-                                            {numOfCartItems && numOfCartItems}
+                                            {data && data}
                                         </span>
                                         <Link to={"cart"} className="nav-link">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="22px">
