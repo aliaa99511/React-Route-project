@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from "./../../assets/images/freshcart-logo.svg";
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
@@ -6,11 +6,22 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from '../../Context/globalContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCartCount } from '../../Redux/CartSlice';
 
 const Header = () => {
     let token = localStorage.getItem("token")
     const navigate = useNavigate();
-    const { numOfCartItems } = useContext(GlobalContext);
+    // const { numOfCartItems } = useContext(GlobalContext);
+    const numOfCartItems = useSelector(state => state.cart.numOfCartItems);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchCartCount());
+    }, [dispatch]);
+
+    console.log("numOfCartItems", numOfCartItems);
+
 
     let handelSignOut = () => {
         localStorage.removeItem("token")

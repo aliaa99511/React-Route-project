@@ -4,7 +4,8 @@ import axios from "axios";
 let initialState = {
     cartItems: [],
     totalPrice: 0,
-    error: null
+    numOfCartItems: 0,
+    error: null,
 };
 
 let headers = {
@@ -47,41 +48,60 @@ export const updateCartProductQuantity = createAsyncThunk(
     }
 );
 
-
+export const fetchCartCount = createAsyncThunk(
+    'cartItems/fetchCartCount',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
+            return data.numOfCartItems;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
 let cartSlice = createSlice({
     name: 'cartItems',
     initialState,
     reducers: {},
-
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(fetchShoppingCart.fulfilled, (state, action) => {
-    //             console.log('Fetched Cart:', action.payload.data);
-    //             state.cartItems = action.payload.products || [];
-    //             state.totalPrice = action.payload.totalCartPrice || 0;
-    //             state.error = null;
-    //         })
-    //         // .addCase(fetchShoppingCart.fulfilled, (state, action) => {
-    //         //     console.log("action", action);
-    //         //     console.log('Fetched Cart:', action.payload.data);
-    //         //     state.cartItems = action.payload.data || [];
-    //         //     state.error = null;
-    //         // })
-    //         .addCase(fetchShoppingCart.rejected, (state, action) => {
-    //             state.error = action.payload;
-    //         })
-    //         .addCase(removeCartItem.fulfilled, (state, action) => {
-    //             console.log("action", action);
-    //             console.log('Removed CartItem:', action.payload);
-    //             state.cartItems = state.cartItems.filter(item => item._id !== action.meta.arg);
-    //             state.error = null;
-    //         })
-    //         .addCase(removeCartItem.rejected, (state, action) => {
-    //             state.error = action.payload;
-    //         });
-    // }
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchShoppingCart.fulfilled, (state, action) => {
+                console.log('Fetched Cart:', action.payload);
+                state.cartItems = action.payload.products || [];
+                state.totalPrice = action.payload.totalCartPrice || 0;
+                state.error = null;
+            })
+            .addCase(fetchShoppingCart.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            .addCase(removeCartItem.fulfilled, (state, action) => {
+                console.log('Removed CartItem:', action.payload);
+                state.cartItems = state.cartItems.filter(item => item._id !== action.meta.arg);
+                state.error = null;
+            })
+            .addCase(removeCartItem.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
+                console.log('Updated Cart Quantity:', action.payload);
+                // Update the specific item's quantity in the cart
+                const index = state.cartItems.findIndex(item => item._id === action.meta.arg.id);
+                if (index !== -1) {
+                    state.cartItems[index].count = action.meta.arg.count;
+                }
+                state.error = null;
+            })
+            .addCase(updateCartProductQuantity.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            .addCase(fetchCartCount.fulfilled, (state, action) => {
+                state.numOfCartItems = action.payload;
+            })
+            .addCase(fetchCartCount.rejected, (state, action) => {
+                state.error = action.payload;
+            });
+    }
 });
-
 
 export const cartReducer = cartSlice.reducer;

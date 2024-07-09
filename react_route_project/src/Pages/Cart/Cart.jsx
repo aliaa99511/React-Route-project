@@ -110,12 +110,11 @@
 // export default Cart;
 
 
+
 // with redux
 
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../../Context/globalContext";
+import React, { useEffect, useState } from "react";
 import SpinnerLoading from "../../Components/SpinnerLoading/SpinnerLoading";
-import NotFoundProduct from "../../Components/NotFoundProduct/NotFoundProduct";
 import CartItem from "../../Components/Cart/CartItem";
 import '../../Style/Cart.css'
 import { ToastContainer, toast } from "react-toastify";
@@ -126,7 +125,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCart, removeCartItem, updateCartProductQuantity } from "../../Redux/CartSlice";
 
 const Cart = () => {
-    // const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
     const [cartItemData, setCartItemData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -184,46 +182,24 @@ const Cart = () => {
         return <EmptyCart />;
     }
 
-    // if (!cart.cartItems.products || cart.cartItems.products.length === 0) {
-    //     return <NotFoundProduct />;
-    // }
-
-
-    // if (cart.cartItems.products.length == 0) {
-    //     return (
-    //         <EmptyCart />
-    //     );
-    // }
-
     return (
         <div className="cart">
             <ToastContainer />
             <Helmet>
                 <title>My Cart</title>
             </Helmet>
-
             <div className="container">
                 <h4 className="mt-4">Shop Cart :</h4>
                 <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
-                {/* <h6 className="mt-2 bold">Total Cart Price : {cart.cartItems.totalCartPrice} EGP</h6> */}
-
                 <div className="card">
-                    {cartItemData.map(item => (
-                        <CartItem
-                            key={item._id}
-                            item={item}
-                            RemoveItem={handleRemoveItem}
-                            UpdateQuantity={handleCartQuantity} />
-                    ))}
-                    {/* {cart.cartItems.products.length > 0 &&
-                        cart.cartItems.products.map(item => (
+                    {cartItemData.length > 0 &&
+                        cartItemData.map(item => (
                             <CartItem
                                 key={item._id}
                                 item={item}
                                 RemoveItem={handleRemoveItem}
-                                UpdateQuantity={UpdateQuantity} />
-                        ))
-                    } */}
+                                UpdateQuantity={handleCartQuantity} />
+                        ))}
                 </div>
 
             </div>
