@@ -125,8 +125,8 @@ import { fetchShoppingCart, removeCartItem, updateCartProductQuantity } from "..
 
 const Cart = () => {
     const { data: cartItemData, totalPrice, loading } = useSelector(state => state.cart.cartItems);
-    console.log("cartItemData", cartItemData);
-    console.log("totalPrice", totalPrice);
+    // console.log("cartItemData", cartItemData);
+    // console.log("totalPrice", totalPrice);
 
     const dispatch = useDispatch()
 
@@ -149,9 +149,9 @@ const Cart = () => {
         );
     }
 
-    // if (!cartItemData || cartItemData.length === 0) {
-    //     return <EmptyCart />;
-    // }
+    if (!cartItemData || cartItemData.length === 0) {
+        return <EmptyCart />;
+    }
 
     return (
         <div className="cart">

@@ -32,7 +32,6 @@ export const removeCartItem = createAsyncThunk(
     async (id, { rejectWithValue }) => {
         try {
             const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { headers });
-            console.log('Remove CartItem Response:', data);
             return data;
         } catch (error) {
             console.error('Remove CartItem Error:', error.response.data);
@@ -45,7 +44,6 @@ export const updateCartProductQuantity = createAsyncThunk(
     async ({ id, count }, { rejectWithValue }) => {
         try {
             const { data } = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { count }, { headers });
-            console.log("Update Cart Quantity Response", data);
             return data;
         } catch (error) {
             console.error("Update Cart Quantity Error:", error.response.data)
@@ -78,7 +76,6 @@ let cartSlice = createSlice({
                 state.cartItems.loading = true;
             })
             .addCase(fetchShoppingCart.fulfilled, (state, action) => {
-                console.log('Fetched Cart:', action.payload);
                 // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
