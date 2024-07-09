@@ -73,15 +73,15 @@ let cartSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(fetchShoppingCart.pending, (state, action) => {
+                state.cartItems.loading = true;
+            })
             .addCase(fetchShoppingCart.fulfilled, (state, action) => {
                 console.log('Fetched Cart:', action.payload);
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
                 state.cartItems.loading = false;
                 state.error = null;
-            })
-            .addCase(fetchShoppingCart.pending, (state, action) => {
-                state.cartItems.loading = true;
             })
             .addCase(fetchShoppingCart.rejected, (state, action) => {
                 state.error = action.payload;
@@ -102,15 +102,16 @@ let cartSlice = createSlice({
                 state.cartItems.loading = false;
                 state.error = action.payload;
             })
+            .addCase(updateCartProductQuantity.pending, (state, action) => {
+                state.cartItems.loading = true;
+            })
             .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
                 console.log('Updated Cart Quantity:', action.payload);
-                const index = state.cartItems.findIndex(item => item._id === action.meta.arg.id);
-                if (index !== -1) {
-                    state.cartItems[index].count = action.meta.arg.count;
-                }
+                state.cartItems.loading = false;
                 state.error = null;
             })
             .addCase(updateCartProductQuantity.rejected, (state, action) => {
+                state.cartItems.loading = false;
                 state.error = action.payload;
             })
             .addCase(fetchCartCount.pending, (state, action) => {
