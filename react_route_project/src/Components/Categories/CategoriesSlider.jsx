@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../../Context/globalContext";
+// import { GlobalContext } from "../../Context/globalContext";
 import Slider from "react-slick";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
 import NotFoundProduct from "../NotFoundProduct/NotFoundProduct";
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategories } from "../../Redux/ProductSlice";
 
 const CategoriesSlider = () => {
+
     // const [categories, setCategories] = useState([]);
     // const [loading, setLoading] = useState(false);
     // const { getAllCategoriesSlider } = useContext(GlobalContext);
