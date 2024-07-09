@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../../Redux/ProductSlice";
 import SpinnerLoading from "../../Components/SpinnerLoading/SpinnerLoading";
@@ -9,13 +8,12 @@ import ProductItem from "../../Components/Products/ProductItem";
 
 const Products = () => {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
 
-    const { products } = useSelector((state) => state.products);
+    const { data: products, loading } = useSelector((state) => state.products);
     // let { counter } = useSelector((state) => state.counter)
 
     useEffect(() => {
-        dispatch(fetchAllProducts()).then(() => setLoading(false));
+        dispatch(fetchAllProducts())
     }, [dispatch]);
 
     if (loading) {
