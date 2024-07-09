@@ -18,6 +18,7 @@ export const fetchShoppingCart = createAsyncThunk('cartItems/getShoppingCartItem
         return rejectWithValue(error.response.data);
     }
 });
+
 export const removeCartItem = createAsyncThunk(
     'cartItems/removeCartItem',
     async (id, { rejectWithValue }) => {
@@ -33,34 +34,26 @@ export const removeCartItem = createAsyncThunk(
 );
 
 
-
-// export const removeCartItem = createAsyncThunk(
-//     'cartItems/removeCartItem',
-//     async (id, { rejectWithValue }) => {
-//         try {
-//             const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { headers });
-//             return data;
-//         } catch (error) {
-//             return rejectWithValue(error.response.data);
-//         }
-//     }
-// );
-
 let cartSlice = createSlice({
     name: 'cartItems',
     initialState,
     reducers: {},
+
     extraReducers: (builder) => {
         builder
             .addCase(fetchShoppingCart.fulfilled, (state, action) => {
-                console.log('Fetched Cart:', action.payload);
-                state.cartItems = action.payload.data.products || [];
+                console.log("action", action);
+
+                console.log('Fetched Cart:', action.payload.data);
+                state.cartItems = action.payload.data || [];
+                // state.cartItems = action.payload.data.products || [];
                 state.error = null;
             })
             .addCase(fetchShoppingCart.rejected, (state, action) => {
                 state.error = action.payload;
             })
             .addCase(removeCartItem.fulfilled, (state, action) => {
+                console.log("action", action);
                 console.log('Removed CartItem:', action.payload);
                 state.cartItems = state.cartItems.filter(item => item._id !== action.meta.arg);
                 state.error = null;
