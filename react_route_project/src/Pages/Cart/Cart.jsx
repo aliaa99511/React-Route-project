@@ -123,10 +123,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from "react-helmet";
 import EmptyCart from "../../Components/Cart/EmptyCart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchShoppingCart, removeCartItem } from "../../Redux/CartSlice";
+import { fetchShoppingCart, removeCartItem, updateCartProductQuantity } from "../../Redux/CartSlice";
 
 const Cart = () => {
-    const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
     // const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
     const [cartItemData, setCartItemData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -134,14 +133,11 @@ const Cart = () => {
 
     const dispatch = useDispatch()
 
-    // const cart = useSelector((state) => state)
-
-    // console.log('cart', cart)
-
-    async function UpdateQuantity(id, count) {
-        let { data } = await UpdateCartProductQuantity(id, count)
-        console.log('dataQuant', data)
-        setCartItemData(data.data.products)
+    const handleCartQuantity = (id, count) => {
+        dispatch(updateCartProductQuantity({ id, count })).then((response) => {
+            setCartItemData(response.payload.data.products);
+            setTotalPrice(response.payload.data.totalCartPrice);
+        })
     }
 
     const handleRemoveItem = (id) => {
@@ -217,7 +213,7 @@ const Cart = () => {
                             key={item._id}
                             item={item}
                             RemoveItem={handleRemoveItem}
-                            UpdateQuantity={UpdateQuantity} />
+                            UpdateQuantity={handleCartQuantity} />
                     ))}
                     {/* {cart.cartItems.products.length > 0 &&
                         cart.cartItems.products.map(item => (

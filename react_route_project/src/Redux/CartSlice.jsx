@@ -31,26 +31,21 @@ export const removeCartItem = createAsyncThunk(
             console.error('Remove CartItem Error:', error.response.data);
             return rejectWithValue(error.response.data);
         }
+    });
+
+export const updateCartProductQuantity = createAsyncThunk(
+    'cartItems/updateCartQuantity',
+    async ({ id, count }, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { count }, { headers });
+            console.log("Update Cart Quantity Response", data);
+            return data;
+        } catch (error) {
+            console.error("Update Cart Quantity Error:", error.response.data)
+            return rejectWithValue(error.response.data)
+        }
     }
 );
-
-// function UpdateCartProductQuantity(id, count) {
-//     return axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${id}`,
-//         {
-//             count,
-//         },
-//         {
-//             headers,
-//         }
-//     )
-//         .then((response) => {
-//             return response;
-//         })
-//         .catch((err) => {
-//             console.error('error', err);
-//             return err;
-//         });
-// }
 
 
 
