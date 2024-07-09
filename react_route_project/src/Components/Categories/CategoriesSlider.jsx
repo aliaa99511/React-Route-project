@@ -13,7 +13,6 @@ const CategoriesSlider = () => {
 
     const { data: categories, loading } = useSelector((state) => state.products.categories)
 
-    console.log('categories', categories)
     const dispatch = useDispatch()
 
     useEffect(() => {

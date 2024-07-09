@@ -92,7 +92,6 @@ let cartSlice = createSlice({
                 state.cartItems.loading = true;
             })
             .addCase(removeCartItem.fulfilled, (state, action) => {
-                console.log('Removed CartItem:', action.payload);
                 // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
@@ -110,7 +109,6 @@ let cartSlice = createSlice({
                 state.cartItems.loading = true;
             })
             .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
-                console.log('Updated Cart Quantity:', action.payload);
                 // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
