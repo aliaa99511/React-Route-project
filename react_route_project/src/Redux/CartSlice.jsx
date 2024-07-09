@@ -4,39 +4,72 @@ import axios from "axios";
 let initialState = {
     cartItems: [],
     error: null
-}
+};
 
 let headers = {
     token: localStorage.getItem('token')
 }
 
-
 export const fetchShoppingCart = createAsyncThunk('cartItems/getShoppingCartItems', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers })
-        return data
+        const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
+        return data;
     } catch (error) {
-        return rejectWithValue(error.response.data)
+        return rejectWithValue(error.response.data);
     }
-})
+});
+export const removeCartItem = createAsyncThunk(
+    'cartItems/removeCartItem',
+    async (id, { rejectWithValue }) => {
+        try {
+            const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { headers });
+            console.log('Remove CartItem Response:', data);
+            return data;
+        } catch (error) {
+            console.error('Remove CartItem Error:', error.response.data);
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 
+
+
+// export const removeCartItem = createAsyncThunk(
+//     'cartItems/removeCartItem',
+//     async (id, { rejectWithValue }) => {
+//         try {
+//             const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, { headers });
+//             return data;
+//         } catch (error) {
+//             return rejectWithValue(error.response.data);
+//         }
+//     }
+// );
 
 let cartSlice = createSlice({
     name: 'cartItems',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        // builder.addCase(ShoppingCartData)
-        builder.addCase(fetchShoppingCart.fulfilled, (state, action) => {
-            state.cartItems = action.payload
-            state.error = null
-
-        })
-            .addCase(fetchShoppingCart.rejected, (state, action) => {
-                state.error = action.payload
+        builder
+            .addCase(fetchShoppingCart.fulfilled, (state, action) => {
+                console.log('Fetched Cart:', action.payload);
+                state.cartItems = action.payload.data.products || [];
+                state.error = null;
             })
+            .addCase(fetchShoppingCart.rejected, (state, action) => {
+                state.error = action.payload;
+            })
+            .addCase(removeCartItem.fulfilled, (state, action) => {
+                console.log('Removed CartItem:', action.payload);
+                state.cartItems = state.cartItems.filter(item => item._id !== action.meta.arg);
+                state.error = null;
+            })
+            .addCase(removeCartItem.rejected, (state, action) => {
+                state.error = action.payload;
+            });
     }
+});
 
-})
 
-export const cartReducer = cartSlice.reducer
+export const cartReducer = cartSlice.reducer;
