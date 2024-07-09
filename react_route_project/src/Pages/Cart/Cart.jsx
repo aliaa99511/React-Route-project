@@ -128,15 +128,15 @@ import { fetchShoppingCart, removeCartItem } from "../../Redux/CartSlice";
 const Cart = () => {
     const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
     // const { GetLoggedUserCart, UpdateCartProductQuantity, RemoveCartItem, setNumOfCartItems } = useContext(GlobalContext)
-    const [cartItemData, setCartItemData] = useState([])
-    const [totalPrice, setTotalPrice] = useState()
+    const [cartItemData, setCartItemData] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
     const [loading, setLoading] = useState(true);
+
     const dispatch = useDispatch()
 
-    const { cart } = useSelector((state) => state)
+    // const cart = useSelector((state) => state)
 
-    console.log('cart', cart)
-    console.log('cartItems', cart.cartItems.products)
+    // console.log('cart', cart)
 
     async function UpdateQuantity(id, count) {
         let { data } = await UpdateCartProductQuantity(id, count)
@@ -148,8 +148,12 @@ const Cart = () => {
         console.log('Dispatching removeCartItem with ID:', id);
         dispatch(removeCartItem(id))
             .then((action) => {
+                console.log("action re", action);
+
                 if (action.meta.requestStatus === 'fulfilled') {
                     toast.success("Product deleted successfully");
+                    setCartItemData(action.payload.data.products);
+                    setTotalPrice(action.payload.data.totalCartPrice);
                 } else {
                     toast.error("Error deleting product");
                     console.error('Remove Item Rejected:', action.payload);
@@ -162,8 +166,16 @@ const Cart = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchShoppingCart()).then(() => setLoading(false))
-    }, [dispatch])
+        dispatch(fetchShoppingCart()).then((response) => {
+            setLoading(false);
+            if (response.meta.requestStatus === 'fulfilled') {
+                setCartItemData(response.payload.data.products);
+                setTotalPrice(response.payload.data.totalCartPrice);
+            } else {
+                toast.error("Error fetching cart items");
+            }
+        });
+    }, [dispatch]);
 
 
     if (loading) {
@@ -172,17 +184,20 @@ const Cart = () => {
         );
     }
 
-
-    if (!cart.cartItems.products || cart.cartItems.products.length === 0) {
-        return <NotFoundProduct />;
+    if (!cartItemData || cartItemData.length === 0) {
+        return <EmptyCart />;
     }
 
+    // if (!cart.cartItems.products || cart.cartItems.products.length === 0) {
+    //     return <NotFoundProduct />;
+    // }
 
-    if (cart.cartItems.products.length == 0) {
-        return (
-            <EmptyCart />
-        );
-    }
+
+    // if (cart.cartItems.products.length == 0) {
+    //     return (
+    //         <EmptyCart />
+    //     );
+    // }
 
     return (
         <div className="cart">
@@ -193,10 +208,18 @@ const Cart = () => {
 
             <div className="container">
                 <h4 className="mt-4">Shop Cart :</h4>
-                <h6 className="mt-2 bold">Total Cart Price : {cart.cartItems.totalCartPrice} EGP</h6>
+                <h6 className="mt-2 bold">Total Cart Price : {totalPrice} EGP</h6>
+                {/* <h6 className="mt-2 bold">Total Cart Price : {cart.cartItems.totalCartPrice} EGP</h6> */}
 
                 <div className="card">
-                    {cart.cartItems.products.length > 0 &&
+                    {cartItemData.map(item => (
+                        <CartItem
+                            key={item._id}
+                            item={item}
+                            RemoveItem={handleRemoveItem}
+                            UpdateQuantity={UpdateQuantity} />
+                    ))}
+                    {/* {cart.cartItems.products.length > 0 &&
                         cart.cartItems.products.map(item => (
                             <CartItem
                                 key={item._id}
@@ -204,7 +227,7 @@ const Cart = () => {
                                 RemoveItem={handleRemoveItem}
                                 UpdateQuantity={UpdateQuantity} />
                         ))
-                    }
+                    } */}
                 </div>
 
             </div>
