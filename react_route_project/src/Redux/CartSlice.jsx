@@ -73,40 +73,50 @@ let cartSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            // fetchShoppingCart
             .addCase(fetchShoppingCart.pending, (state, action) => {
                 state.cartItems.loading = true;
             })
             .addCase(fetchShoppingCart.fulfilled, (state, action) => {
                 console.log('Fetched Cart:', action.payload);
+                // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
                 state.cartItems.loading = false;
                 state.error = null;
             })
             .addCase(fetchShoppingCart.rejected, (state, action) => {
-                state.error = action.payload;
                 state.cartItems.loading = false;
+                state.error = action.payload;
             })
+
+            //removeCartItem
             .addCase(removeCartItem.pending, (state, action) => {
                 state.cartItems.loading = true;
             })
             .addCase(removeCartItem.fulfilled, (state, action) => {
                 console.log('Removed CartItem:', action.payload);
+                // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
-                state.numOfCartItems.data = action.payload.numOfCartItems;
                 state.cartItems.loading = false;
+                state.numOfCartItems.data = action.payload.numOfCartItems;
                 state.error = null;
             })
             .addCase(removeCartItem.rejected, (state, action) => {
                 state.cartItems.loading = false;
                 state.error = action.payload;
             })
+
+            // updateCartProductQuantity
             .addCase(updateCartProductQuantity.pending, (state, action) => {
                 state.cartItems.loading = true;
             })
             .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
                 console.log('Updated Cart Quantity:', action.payload);
+                // setState
+                state.cartItems.data = action.payload.data.products || [];
+                state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
                 state.cartItems.loading = false;
                 state.error = null;
             })
@@ -114,6 +124,8 @@ let cartSlice = createSlice({
                 state.cartItems.loading = false;
                 state.error = action.payload;
             })
+
+            // fetchCartCount
             .addCase(fetchCartCount.pending, (state, action) => {
                 state.numOfCartItems.loading = true;
             })

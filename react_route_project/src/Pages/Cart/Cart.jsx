@@ -127,23 +127,16 @@ const Cart = () => {
     const { data: cartItemData, totalPrice, loading } = useSelector(state => state.cart.cartItems);
     console.log("cartItemData", cartItemData);
     console.log("totalPrice", totalPrice);
-    console.log("loading", loading);
-
 
     const dispatch = useDispatch()
 
     const handleCartQuantity = (id, count) => {
-        //     dispatch(updateCartProductQuantity({ id, count })).then((response) => {
-        //         setCartItemData(response.payload.data.products);
-        //         setTotalPrice(response.payload.data.totalCartPrice);
-        //     })
+        dispatch(updateCartProductQuantity({ id, count }))
     }
 
     const handleRemoveItem = (id) => {
-        console.log('Dispatching removeCartItem with ID:', id);
         dispatch(removeCartItem(id))
     };
-
 
     useEffect(() => {
         dispatch(fetchShoppingCart())

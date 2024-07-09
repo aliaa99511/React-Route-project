@@ -15,7 +15,7 @@ const Header = () => {
     // const { numOfCartItems } = useContext(GlobalContext);
 
     const dispatch = useDispatch();
-    const { data, loading } = useSelector(state => state.cart.numOfCartItems);
+    const { data: numOfCartItems, loading } = useSelector(state => state.cart.numOfCartItems);
 
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const Header = () => {
 
                                     <div className='cart-icon position-relative mr-15 pointer'>
                                         <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
-                                            {data && data}
+                                            {numOfCartItems && numOfCartItems}
                                         </span>
                                         <Link to={"cart"} className="nav-link">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="22px">
