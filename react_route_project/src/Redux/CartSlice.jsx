@@ -3,9 +3,9 @@ import axios from "axios";
 
 let initialState = {
     cartItems: {
+        data: [],
         totalPrice: 0,
         numOfCartItems: 0,
-        data: [],
         loading: false,
         error: null,
     },
@@ -24,6 +24,7 @@ export const fetchShoppingCart = createAsyncThunk('cartItems/getShoppingCartItem
         const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
         return data;
     } catch (error) {
+        console.error('fetch Shopping Cart Error:', error.response.data);
         return rejectWithValue(error.response.data);
     }
 });
@@ -60,6 +61,7 @@ export const fetchNumOfCartItems = createAsyncThunk(
             const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
             return data.numOfCartItems;
         } catch (error) {
+            console.error("fetch NumOf Cart Items Error:", error.response.data)
             return rejectWithValue(error.response.data);
         }
     }
@@ -73,7 +75,7 @@ let cartSlice = createSlice({
     extraReducers: (builder) => {
         builder
             // fetchShoppingCart
-            .addCase(fetchShoppingCart.pending, (state, action) => {
+            .addCase(fetchShoppingCart.pending, (state) => {
                 state.cartItems.loading = true;
             })
             .addCase(fetchShoppingCart.fulfilled, (state, action) => {
@@ -89,7 +91,7 @@ let cartSlice = createSlice({
             })
 
             //removeCartItem
-            .addCase(removeCartItem.pending, (state, action) => {
+            .addCase(removeCartItem.pending, (state) => {
                 state.cartItems.loading = true;
             })
             .addCase(removeCartItem.fulfilled, (state, action) => {
@@ -106,7 +108,7 @@ let cartSlice = createSlice({
             })
 
             // updateCartProductQuantity
-            .addCase(updateCartProductQuantity.pending, (state, action) => {
+            .addCase(updateCartProductQuantity.pending, (state) => {
                 state.cartItems.loading = true;
             })
             .addCase(updateCartProductQuantity.fulfilled, (state, action) => {
