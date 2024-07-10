@@ -155,6 +155,12 @@ const Cart = () => {
         return <EmptyCart />;
     }
 
+    // if (cartItemData) {
+    //     return (
+    //         <SpinnerLoading />
+    //     );
+    // }
+
     return (
         <div className="cart">
             <ToastContainer />

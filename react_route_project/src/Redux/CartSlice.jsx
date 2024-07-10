@@ -4,14 +4,15 @@ import axios from "axios";
 let initialState = {
     cartItems: {
         totalPrice: 0,
+        numOfCartItems: 0,
         data: [],
-        loading: false
+        loading: false,
+        error: null,
     },
-    numOfCartItems: {
-        data: 0,
-        loading: false
-    },
-    error: null,
+    // numOfCartItems: {
+    //     data: 0,
+    //     loading: false
+    // },
 };
 
 let headers = {
@@ -52,8 +53,8 @@ export const updateCartProductQuantity = createAsyncThunk(
     }
 );
 
-export const fetchCartCount = createAsyncThunk(
-    'cartItems/fetchCartCount',
+export const fetchNumOfCartItems = createAsyncThunk(
+    'cartItems/fetchNumOfCartItems',
     async (_, { rejectWithValue }) => {
         try {
             const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
@@ -80,11 +81,11 @@ let cartSlice = createSlice({
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
                 state.cartItems.loading = false;
-                state.error = null;
+                state.cartItems.error = null;
             })
             .addCase(fetchShoppingCart.rejected, (state, action) => {
                 state.cartItems.loading = false;
-                state.error = action.payload;
+                state.cartItems.error = action.payload;
             })
 
             //removeCartItem
@@ -95,13 +96,13 @@ let cartSlice = createSlice({
                 // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
+                state.cartItems.numOfCartItems = action.payload.numOfCartItems;
                 state.cartItems.loading = false;
-                state.numOfCartItems.data = action.payload.numOfCartItems;
-                state.error = null;
+                state.cartItems.error = null;
             })
             .addCase(removeCartItem.rejected, (state, action) => {
                 state.cartItems.loading = false;
-                state.error = action.payload;
+                state.cartItems.error = action.payload;
             })
 
             // updateCartProductQuantity
@@ -113,25 +114,17 @@ let cartSlice = createSlice({
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
                 state.cartItems.loading = false;
-                state.error = null;
+                state.cartItems.error = null;
             })
             .addCase(updateCartProductQuantity.rejected, (state, action) => {
                 state.cartItems.loading = false;
-                state.error = action.payload;
+                state.cartItems.error = action.payload;
             })
 
-            // fetchCartCount
-            .addCase(fetchCartCount.pending, (state, action) => {
-                state.numOfCartItems.loading = true;
+            // fetchNumOfCartItems
+            .addCase(fetchNumOfCartItems.fulfilled, (state, action) => {
+                state.cartItems.numOfCartItems = action.payload;
             })
-            .addCase(fetchCartCount.fulfilled, (state, action) => {
-                state.numOfCartItems.loading = false;
-                state.numOfCartItems.data = action.payload;
-            })
-            .addCase(fetchCartCount.rejected, (state, action) => {
-                state.numOfCartItems.loading = false;
-                state.error = action.payload;
-            });
     }
 });
 
