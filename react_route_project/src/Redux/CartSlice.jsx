@@ -54,18 +54,18 @@ export const updateCartProductQuantity = createAsyncThunk(
     }
 );
 
-export const fetchNumOfCartItems = createAsyncThunk(
-    'cartItems/fetchNumOfCartItems',
-    async (_, { rejectWithValue }) => {
-        try {
-            const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
-            return data.numOfCartItems;
-        } catch (error) {
-            console.error("fetch NumOf Cart Items Error:", error.response.data)
-            return rejectWithValue(error.response.data);
-        }
-    }
-);
+// export const fetchNumOfCartItems = createAsyncThunk(
+//     'cartItems/fetchNumOfCartItems',
+//     async (_, { rejectWithValue }) => {
+//         try {
+//             const { data } = await axios.get('https://ecommerce.routemisr.com/api/v1/cart', { headers });
+//             return data.numOfCartItems;
+//         } catch (error) {
+//             console.error("fetch NumOf Cart Items Error:", error.response.data)
+//             return rejectWithValue(error.response.data);
+//         }
+//     }
+// );
 
 
 let cartSlice = createSlice({
@@ -82,6 +82,7 @@ let cartSlice = createSlice({
                 // setState
                 state.cartItems.data = action.payload.data.products || [];
                 state.cartItems.totalPrice = action.payload.data.totalCartPrice || 0;
+                state.cartItems.numOfCartItems = action.payload.numOfCartItems;
                 state.cartItems.loading = false;
                 state.cartItems.error = null;
             })
@@ -123,10 +124,10 @@ let cartSlice = createSlice({
                 state.cartItems.error = action.payload;
             })
 
-            // fetchNumOfCartItems
-            .addCase(fetchNumOfCartItems.fulfilled, (state, action) => {
-                state.cartItems.numOfCartItems = action.payload;
-            })
+        // fetchNumOfCartItems
+        // .addCase(fetchNumOfCartItems.fulfilled, (state, action) => {
+        //     state.cartItems.numOfCartItems = action.payload;
+        // })
     }
 });
 

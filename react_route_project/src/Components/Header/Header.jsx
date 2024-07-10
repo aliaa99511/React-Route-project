@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from '../../Context/globalContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNumOfCartItems } from '../../Redux/CartSlice';
+import { fetchShoppingCart } from '../../Redux/CartSlice';
 
 const Header = () => {
     let token = localStorage.getItem("token")
@@ -19,7 +19,7 @@ const Header = () => {
     const { numOfCartItems } = useSelector(state => state.cart.cartItems);
 
     useEffect(() => {
-        dispatch(fetchNumOfCartItems());
+        dispatch(fetchShoppingCart());
     }, [dispatch]);
 
     let handelSignOut = () => {
